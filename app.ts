@@ -1,29 +1,20 @@
-function add(n1: number, n2: number) {
-  return n1 + n2;
+// used when we dont know what that user might input - can be a number, string, bool etc.
+// this a better option than using 'any' because it makes sure you do some type checking
+let userInput: unknown;
+let userName: string;
+
+userInput = 5;
+userInput = "Max";
+if (typeof userInput === "string") {
+  userName = userInput;
 }
 
-// This is a VOID functions and it does not return a value
-function printResult(num: number) {
-  console.log("Result: " + num);
+// Never type - functions that are intended to NEVER return anything, different from VOID as it could return something
+// if you want to be specific to other developers you can type this function as never to make sure its understood that this function will never return a value
+// but just simply throw an error
+
+function generateError(message: string, code: number): never {
+  throw { message: message, errorCode: code };
 }
 
-function addAndHandle(n1: number, n2: number, cb: (num: number) => void) {
-  const result = n1 + n2;
-  cb(result);
-}
-
-printResult(add(5, 12));
-
-// function types define the parameter and return type of a function
-let combineValues: (a: number, b: number) => number;
-
-combineValues = add;
-
-// without setting function types this line will run but will throw error at runtime returning 'undefined'
-// combineValues = printResult;
-
-console.log(combineValues(8, 8));
-
-addAndHandle(10, 20, (result) => {
-  console.log(result);
-});
+generateError("An error ocurred!", 500);
